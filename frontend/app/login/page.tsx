@@ -120,13 +120,11 @@ export default function LoginPage() {
 
   const finishLogin = async (user: import("firebase/auth").User) => {
     const token = await user.getIdToken();
-    const res = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8080"}/auth/login`,
-      {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ token }),
-      },
+    const res = await fetch(`${BASE_URL}/auth/login`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ token }),
+    },
     );
     if (!res.ok) throw new Error("Authentication failed. Please try again.");
     const data = await res.json();
